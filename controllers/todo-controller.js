@@ -70,7 +70,7 @@ const todoController = {
     const { name, isDone } = req.body
 
     try {
-      await Todo.update({ name, isDone }, { where: { id, userId } })
+      await Todo.update({ name, isDone: `${isDone === 'on'}` }, { where: { id, userId } })
       req.flash('success_message', 'Update successfully.')
       res.redirect(`/todos/${id}`)
     } catch (error) {
