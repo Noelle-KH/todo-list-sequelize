@@ -46,7 +46,7 @@ const userController = {
       req.flash('success_message', 'Register successfully.')
       res.redirect('/users/login')
     } catch (error) {
-      console.log(error)
+      next(error)
     }
   },
   logout: (req, res) => {

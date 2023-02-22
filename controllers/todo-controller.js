@@ -2,7 +2,7 @@ const { v4: uuidv4 } = require('uuid')
 const { Todo } = require('../models')
 
 const todoController = {
-  getTodos: async (req, res) => {
+  getTodos: async (req, res, next) => {
     const userId = req.user.id
 
     try {
@@ -19,13 +19,13 @@ const todoController = {
 
       res.render('index', { todos })
     } catch (error) {
-      console.log(error)
+      next(error)
     }
   },
   newTodo: (req, res) => {
     res.render('new')
   },
-  createTodo: async (req, res) => {
+  createTodo: async (req, res, next) => {
     const userId = req.user.id
     const { name, isDone } = req.body
 
@@ -39,10 +39,10 @@ const todoController = {
       req.flash('success_message', 'Create successfully.')
       res.redirect('/todos')
     } catch (error) {
-      console.log(error)
+      next(error)
     }
   },
-  getTodo: async (req, res) => {
+  getTodo: async (req, res, next) => {
     const userId = req.user.id
     const id = req.params.id
 
@@ -50,10 +50,10 @@ const todoController = {
       const todo = await Todo.findOne({ where: { id, userId } })
       res.render('detail', { todo: todo.toJSON() })
     } catch (error) {
-      console.log(error)
+      next(error)
     }
   },
-  editTodo: async (req, res) => {
+  editTodo: async (req, res, next) => {
     const userId = req.user.id
     const id = req.params.id
 
@@ -61,10 +61,10 @@ const todoController = {
       const todo = await Todo.findOne({ where: { id, userId } })
       res.render('edit', { todo: todo.toJSON() })
     } catch (error) {
-      console.log(error)
+      next(error)
     }
   },
-  updateTodo: async (req, res) => {
+  updateTodo: async (req, res, next) => {
     const userId = req.user.id
     const id = req.params.id
     const { name, isDone } = req.body
@@ -74,10 +74,10 @@ const todoController = {
       req.flash('success_message', 'Update successfully.')
       res.redirect(`/todos/${id}`)
     } catch (error) {
-      console.log(error)
+      next(error)
     }
   },
-  deleteTodo: async (req, res) => {
+  deleteTodo: async (req, res, next) => {
     const userId = req.user.id
     const id = req.params.id
 
@@ -86,7 +86,7 @@ const todoController = {
       req.flash('success_message', 'Delete successfully.')
       res.redirect('/todos')
     } catch (error) {
-      console.log(error)
+      next(error)
     }
   }
 }
