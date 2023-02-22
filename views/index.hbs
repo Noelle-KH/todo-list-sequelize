@@ -1,6 +1,7 @@
 <a href="/todos/new" class="btn btn-primary mb-3">Create</a>
+{{> message}}
 {{#if todos}}
-  <ul class="list-group">
+  <ul class="list-group py-3">
     {{#each todos}}
     <li class="list-group-item">
       <div class="row">
@@ -15,7 +16,7 @@
           <a class="btn btn-secondary" href="./todos/{{ this.id }}">detail</a>
           <a class="btn btn-success" href="./todos/{{ this.id }}/edit">edit</a>
           <form action="./todos/{{ this.id }}?_method=DELETE" method="POST" style="display: inline;">
-            <button class="btn btn-danger" type="submit">delete</button>
+            <button class="btn btn-danger" type="submit" onclick="return confirm(`Are you sure delete {{this.name}}?`)">delete</button>
           </form>
         </div>
       </div>
@@ -23,5 +24,5 @@
     {{/each}}
   </ul>
 {{else}}
-  <p class="text-center">請新增代辦事項</p>
+  <p class="text-center">Please create todo event</p>
 {{/if}}

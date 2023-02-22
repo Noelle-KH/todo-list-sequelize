@@ -1,3 +1,4 @@
+{{> message}}
 <form action="/todos/{{ todo.id }}?_method=DELETE" method="POST" class="d-inline">
   <div class="input-group">
     <div class="input-group-text">
@@ -5,6 +6,6 @@
     </div>
     <input class="form-control" type="text" placeholder="name" name="name" value="{{ todo.name }}" disabled>
     <a class="btn btn-success" href="/todos/{{ todo.id }}/edit">edit</a>
-    <button class="btn btn-danger" type="submit">delete</button>
+    <button class="btn btn-danger" type="submit" onclick="return confirm(`Are you sure delete {{todo.name}}?`)">delete</button>
   </div>
 </form>
